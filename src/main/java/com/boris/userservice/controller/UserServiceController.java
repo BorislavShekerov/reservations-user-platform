@@ -17,11 +17,17 @@ public class UserServiceController {
 	UserServiceDao userServiceDao;
 	
 	@PostMapping("/users")
-	public void registerUser(@RequestBody UserDetails userDetails) {
-		userServiceDao.save(userDetails);
+	public Boolean registerUser(@RequestBody UserDetails userDetails) {
+		if(!userServiceDao.exists(userDetails.getEmail())){
+			userServiceDao.save(userDetails);
+			
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
-	@GetMapping("/users/{userEmail}")
+	@GetMapping("/users/{userEmail:.*}")
 	public UserDetails retrieveUserDetails(@PathVariable String userEmail){
 		return userServiceDao.findOne(userEmail);
 	}

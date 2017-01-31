@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.boris.userservice.TestConfig;
 import com.boris.userservice.dao.UserServiceDao;
 import com.boris.userservice.model.UserDetails;
-import com.boris.userservice.model.UserType;
+import com.boris.userservice.model.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,7 +48,7 @@ public class UserServiceIntegrationTest {
 	@Before
 	public void setup() {
 		userServiceDao.deleteAll();
-		dummyUserDetails = new UserDetails(DUMMY_EMAIL, "dummyPassword", UserType.USER);
+		dummyUserDetails = new UserDetails(DUMMY_EMAIL, "dummyPassword", Arrays.asList(UserRole.MEMBER));
 		
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}

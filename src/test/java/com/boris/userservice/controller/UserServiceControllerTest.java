@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.boris.userservice.dao.UserServiceDao;
 import com.boris.userservice.model.UserDetails;
-import com.boris.userservice.model.UserType;
+import com.boris.userservice.model.UserRole;
 
 public class UserServiceControllerTest {
 	
@@ -31,7 +33,7 @@ public class UserServiceControllerTest {
 	
 	@Test
 	public void registerUser(){
-		UserDetails userDetails = new UserDetails("dummyUserEmail", "pass", UserType.USER);
+		UserDetails userDetails = new UserDetails("dummyUserEmail", "pass", Arrays.asList(UserRole.MEMBER));
 		
 		testObj.registerUser(userDetails);
 		
@@ -41,7 +43,7 @@ public class UserServiceControllerTest {
 	@Test
 	public void retrieveUserDetails_userDetailsExist(){
 		String dummyUserEmail = "dummyUserEmail";
-		UserDetails userDetails = new UserDetails(dummyUserEmail, "pass", UserType.USER);
+		UserDetails userDetails = new UserDetails(dummyUserEmail, "pass", Arrays.asList(UserRole.MEMBER));
 		
 		when(userServiceDao.findOne(dummyUserEmail)).thenReturn(userDetails);
 		
